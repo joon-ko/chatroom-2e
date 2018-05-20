@@ -66,6 +66,7 @@ socket.on('onlineUsers', function(num_users) {
 // theoretically not optimal, but i don't forsee many concurrent users so it's ok
 socket.on('displayUsers', function(users) {
 	var i;
+	document.getElementById('user-list').innerHTML = '';
 	for (i = 0; i < users.length; i++) {
 		document.getElementById('user-list').innerHTML +=
 			'<div class="chat message">'+users[i]+'</div>'
