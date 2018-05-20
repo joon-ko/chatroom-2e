@@ -20,6 +20,7 @@ io.on('connection', function (socket) {
 			socket.username = data;
 			socket.emit('userSet', {username:data});
 			io.sockets.emit('onlineUsers', numUsers);
+			io.sockets.emit('displayUsers', users);
 		} else {
 			socket.emit('userExists', 'this username is taken.');
 		}
@@ -36,6 +37,7 @@ io.on('connection', function (socket) {
 			users.splice(users.indexOf(socket.username),1);
 		}
 		io.sockets.emit('onlineUsers', numUsers);
+		io.sockets.emit('displayUsers', users);
 	});
 });
 

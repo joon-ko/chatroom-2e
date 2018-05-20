@@ -1,5 +1,4 @@
 var socket = io(); // connects client to default namespace
-socket.connect('http://18.189.46.27:3000');
 
 function setUsername() {
 	var username = document.getElementById('name').value;
@@ -13,15 +12,21 @@ function setUsername() {
 
 var user;
 socket.on('userExists', function(data) {
-	document.getElementById('error-container').innerHTML = data;
+	document.getElementById('error-container').innerHTML = '<span class="message">'+data+'</span>';
 });
 // showing normal chat interface after valid username is set
 socket.on('userSet', function(data) {
 	user = data.username;
-	document.body.innerHTML = '<input type="text" id="message">\
-		<button id="message-button" type="button" name="button" onclick="sendMessage()">send</button>\
+	document.body.innerHTML = 
+		'<div id="app-wrapper">\
+		<div id="type-wrapper">\
+			<input type="text" id="message">\
+			<button id="message-button" type="button" name="button" onclick="sendMessage()">send</button>\
+		</div>\
 		<div class="container" id="users-online"></div>\
-		<div class="container" id="message-container"></div>';
+		<div class="container" id="message-container"></div>\
+		<div class="container" id="user-list"></div>\
+		</div>';
 
 	// support for pressing Enter to send a message
 	var chat_input = document.getElementById('message');
@@ -44,7 +49,7 @@ function sendMessage() {
 socket.on('newmsg', function(data) {
 	if (user) {
 		document.getElementById('message-container').innerHTML +=
-			'<div class="message"><b>'+data.user+'</b>: '+data.message+'</div>'
+			'<div class="chat message"><b>'+data.user+'</b>: '+data.message+'</div>'
 	}
 
 	// auto scroll to bottom of page when new data is inserted
@@ -56,4 +61,13 @@ socket.on('newmsg', function(data) {
 socket.on('onlineUsers', function(num_users) {
 	document.getElementById('users-online').innerHTML = 
 		'<div class="message">There are <span style="color:green">'+num_users+'</span> users online.</div>'
+});
+
+// theoretically not optimal, but i don't forsee many concurrent users so it's ok
+socket.on('displayUsers', function(users) {
+	var i;
+	for (i = 0; i < users.length; i++) {
+		document.getElementById('user-list').innerHTML +=
+			'<div class="chat message">'+users[i]+'</div>'
+	}
 });

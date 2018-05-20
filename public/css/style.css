@@ -1,14 +1,39 @@
+#app-wrapper {
+    border: 2px solid black;
+    background-color: #DCDCDC;
+    width: 600px;
+    height: 600px;
+    border-radius: 5px;
+}
+
 div.container {
 	background-color: #F0F0F0;
 	border-radius: 5px;
-	margin: 10px 2px;
+	margin: 5px 5px;
 	display: block;
 	padding: 5px 5px;
 	overflow: auto;
 }
 
+#users-online {
+    margin: 0px 5px 5px 5px;
+    height: 20px;
+}
+
+#message-container, #user-list {
+    margin: 0px 5px 5px 5px;
+	height: 510px;
+}
+
 #message-container {
-	height: 400px;
+    width: 440px;
+    float: left;
+}
+
+#user-list {
+    width: 125px;
+    margin: 0px 5px 5px 0px;
+    float: left;
 }
 
 .message {
@@ -16,10 +41,17 @@ div.container {
 	font-size: 14px;
 }
 
+.chat {
+    padding: 2px 0px;
+}
+
 input {
-    width: 80%;
-    padding: 10px 20px;
-    margin: 8px 0;
+    width: 490px;
+    height: 30px;
+    font-size: 14px;
+    font-family: "Verdana", sans-serif;
+    padding: 5px 5px;
+    margin: 5px 5px;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -27,16 +59,18 @@ input {
 }
 
 button {
-	width: 18%;
+	width: 90px;
+    height: 30px;
     background-color: #72BCD4;
+    font-size: 14px;
     border: none;
     color: white;
-    padding: 10px 20px;
+    padding: 5px 5px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 14px;
-    margin: 4px 2px;
+    margin: 5px 5px 5px 0px;
     cursor: pointer;
     border-radius: 5px;
 }
