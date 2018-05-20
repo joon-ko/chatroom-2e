@@ -12,13 +12,15 @@ var numUsers = 0;
 io.on('connection', function (socket) {
 	// when user clicks button 'let me chat'
 	socket.on('setUsername', function(data) { // data is username string
-		if (users.indexOf(data) <= -1) { // check if user already exists
+		if (users.indexOf(data) === -1) { // check if user already exists
 			numUsers++;
 			users.push(data);
 			socket.username = data;
 			socket.emit('userSet', {username:data});
 			io.sockets.emit('onlineUsers', numUsers);
 			console.log('new user '+data+' connected');
+			console.log('users array: '+users);
+			console.log('numUsers:' +numUsers);
 		} else {
 			socket.emit('userExists', 'this username is taken.');
 		}
@@ -32,9 +34,11 @@ io.on('connection', function (socket) {
 	socket.on('disconnect', function() {
 		if (socket.username) {
 			numUsers--;
+			users.splice(users.indexOf(socket.username),1);
 		}
-		users.splice(users.indexOf(socket.username),1);
 		io.sockets.emit('onlineUsers', numUsers);
+		console.log('users array: '+users);
+		console.log('numUsers: '+numUsers);
 	});
 });
 
