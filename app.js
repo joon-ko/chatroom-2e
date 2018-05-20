@@ -1,7 +1,9 @@
-var app = require('express')();
+var express = require('express'), app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var path = require('path');
 
+app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', function (req, res) {
 	res.sendFile(__dirname + '/index.html');
 });
@@ -18,9 +20,6 @@ io.on('connection', function (socket) {
 			socket.username = data;
 			socket.emit('userSet', {username:data});
 			io.sockets.emit('onlineUsers', numUsers);
-			console.log('new user '+data+' connected');
-			console.log('users array: '+users);
-			console.log('numUsers:' +numUsers);
 		} else {
 			socket.emit('userExists', 'this username is taken.');
 		}
@@ -37,8 +36,6 @@ io.on('connection', function (socket) {
 			users.splice(users.indexOf(socket.username),1);
 		}
 		io.sockets.emit('onlineUsers', numUsers);
-		console.log('users array: '+users);
-		console.log('numUsers: '+numUsers);
 	});
 });
 
