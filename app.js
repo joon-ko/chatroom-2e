@@ -30,7 +30,9 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('disconnect', function() {
-		numUsers--;
+		if (socket.username) {
+			numUsers--;
+		}
 		users.splice(users.indexOf(socket.username),1);
 		io.sockets.emit('onlineUsers', numUsers);
 	});
