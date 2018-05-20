@@ -7,14 +7,17 @@ app.get('/', function (req, res) {
 });
 
 // on connection
-users = [];
+var users = [];
+var numUsers = 0;
 io.on('connection', function (socket) {
 	// when user clicks button 'let me chat'
 	socket.on('setUsername', function(data) { // data is username string
-		if (users.indexOf(data) === -1) { // check if user already exists
-			users.push(socket);
+		if (users.indexOf(data) <= -1) { // check if user already exists
+			numUsers++;
+			users.push(data);
+			socket.username = data;
 			socket.emit('userSet', {username:data});
-			io.sockets.emit('onlineUsers', users.length);
+			io.sockets.emit('onlineUsers', numUsers);
 			console.log('new user '+data+' connected');
 		} else {
 			socket.emit('userExists', 'this username is taken.');
@@ -27,9 +30,9 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('disconnect', function() {
-		var i = users.indexOf(socket);
-		users.splice(i, 1);
-		io.sockets.emit('onlineUsers', users.length);
+		numUsers--;
+		users.splice(users.indexOf(socket.username),1);
+		io.sockets.emit('onlineUsers', numUsers);
 	});
 });
 
