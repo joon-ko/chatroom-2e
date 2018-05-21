@@ -49,7 +49,7 @@ function sendMessage() {
 socket.on('newmsg', function(data) {
 	if (user) {
 		document.getElementById('message-container').innerHTML +=
-			'<div class="chat message"><b>'+data.user+'</b>: '+data.message.replace(/</g, "&lt;").replace(/>/g, "&gt;")+'</div>'
+			'<div class="chat message"><b>'+data.user+'</b>: '+data.message+'</div>'
 	}
 
 	// auto scroll to bottom of page when new data is inserted
