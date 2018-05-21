@@ -32,7 +32,8 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('disconnect', function() {
-		if (socket.username) {
+		// only decrement numUsers if socket had a username, i.e. logged in
+		if (socket.username) {  
 			numUsers--;
 			users.splice(users.indexOf(socket.username),1);
 		}
@@ -44,5 +45,3 @@ io.on('connection', function (socket) {
 http.listen(process.env.PORT || 3000, function () {
 	console.log('running!');
 });
-
-// :) :)
