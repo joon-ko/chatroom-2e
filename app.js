@@ -14,7 +14,8 @@ var numUsers = 0;
 io.on('connection', function (socket) {
 	// when user clicks button 'let me chat'
 	socket.on('setUsername', function(data) { // data is username string
-		data = data.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+		// prevent html injection
+		// data = data.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 		if (users.indexOf(data) === -1) { // check if user already exists
 			numUsers++;
 			users.push(data);
@@ -29,7 +30,8 @@ io.on('connection', function (socket) {
 
 	// when server receives message, immediately broadcast it to all clients
 	socket.on('msg', function(data) {
-		data.message = data.message.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+		// prevent html injection
+		// data.message = data.message.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 		io.sockets.emit('newmsg', data);
 	});
 
