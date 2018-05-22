@@ -20,7 +20,7 @@ socket.on('userSet', function(data) {
 	document.body.innerHTML = 
 		'<div id="app-wrapper">\
 		<div id="type-wrapper">\
-			<input type="text" id="message">\
+			<input type="text" maxlength="5000" id="message">\
 			<button id="message-button" type="button" name="button" onclick="sendMessage()">send</button>\
 		</div>\
 		<div class="container" id="users-online"></div>\
@@ -55,6 +55,17 @@ socket.on('newmsg', function(data) {
 	// auto scroll to bottom of page when new data is inserted
 	var message_container = document.getElementById('message-container');
 	message_container.scrollTop = message_container.scrollHeight;
+});
+
+socket.on('spamNotice', function() {
+	if (user) {
+		document.getElementById('message-container').innerHTML +=
+			'<div class="chat message"><span style="color:red">you are sending messages too quickly. try again in a bit.</span></div>'
+		
+		// auto scroll 
+		var message_container = document.getElementById('message-container');
+		message_container.scrollTop = message_container.scrollHeight;
+	}
 });
 
 // gives number of online users

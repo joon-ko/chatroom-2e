@@ -34,6 +34,7 @@ div.container {
     width: 125px;
     margin: 0px 5px 5px 0px;
     float: left;
+    overflow-x: auto;
 }
 
 .message {
